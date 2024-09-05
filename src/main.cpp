@@ -1,12 +1,12 @@
 #include <Arduino.h>
 #include "LIS3DHTR.h"
 #include <Wire.h>
-#include <U8g2lib.h>
+#include <RTClib.h>  // Include RTClib for DS3231
 
 #define WIRE Wire
 
 LIS3DHTR<TwoWire> LIS; // I2C for accelerometer
-U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, U8X8_PIN_NONE); // Initialize OLED using U8g2 library
+RTC_DS3231 rtc;  // Create an RTC_DS3231 object
 
 const int buttonPin = 6;
 int mode = 0;
@@ -17,6 +17,7 @@ float avg_step_distance_meter = 0.70104;
 bool aboveThreshold = false;
 bool buttonPressed = false;
 bool buttonStateChanged = false;
+int previousMode = -1;  // Variable to store the previous mode, initially set to an impossible mode
 
 void setup() {
   Serial.begin(9600);
@@ -29,14 +30,18 @@ void setup() {
 
   steps = 0;
 
-  // Initialize the OLED display
-  u8g2.begin();
-  u8g2.setFont(u8g2_font_ncenB08_tr);
-  u8g2.clearBuffer();                  // Clear internal memory
-  u8g2.drawStr(0, 10, "Initializing"); // Display initializing message
-  u8g2.sendBuffer();                   // Transfer internal memory to the display
+  /*
+  if (!rtc.begin()) {  // Initialize the RTC
+    Serial.println("Couldn't find RTC");
+    while (1);
+  }
 
-  delay(2000); // Wait for 2 seconds to show initializing message
+  if (rtc.lostPower()) {  // If RTC lost power, set the time to compile time
+    Serial.println("RTC lost power, setting time!");
+    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+  }
+  */
+
 }
 
 // Function to calculate calories
@@ -59,6 +64,7 @@ int getSteps() {
   return steps;
 }
 
+// Function to update steps
 void updateSteps() {
   float current_x = LIS.getAccelerationX();
   if (!aboveThreshold && ((prev_x <= 0.5 && current_x > 0.5) || (prev_x >= -0.5 && current_x < -0.5))) {
@@ -70,11 +76,36 @@ void updateSteps() {
   prev_x = current_x;
 }
 
+// Function to get current date and time from DS3231
+String getDate() {
+  DateTime now = rtc.now();
+  String getDateStr = String(now.year()) + "/" + String(now.month()) + "/" + String(now.day()); 
+  return getDateStr;
+}
+
+String getTime(){
+  DateTime now = rtc.now();
+  String getTimeStr = String(now.year()) + "/" + String(now.month()) + "/" + String(now.day()); 
+  return getTimeStr;
+}
+
+void getWeather(){
+
+}
+
+void getTemp(){
+
+}
+
+void getPersonalTemp () {
+
+
+}
+
+
 void loop() {
   updateSteps(); // Update steps count
- 
-  Serial.print("Steps: ");
-  Serial.println(steps);
+
 
   bool currentButtonState = digitalRead(buttonPin) == LOW;
   if (currentButtonState != buttonPressed) {
@@ -88,61 +119,64 @@ void loop() {
     mode = (mode + 1) % 5;
     Serial.print("Mode changed to: ");
     Serial.println(mode);
-    delay(500);
+    delay(500); // Delay to ensure mode change is clearly visible
   }
 
-  // Display different information based on mode
-  u8g2.clearBuffer(); // Clear internal buffer
+  // Only display the message if the mode has changed
+  if (mode != previousMode) {
+    previousMode = mode;  // Update the previousMode to the current mode
 
-  switch (mode) {
-    case 0:
-      // Empty display, do nothing
-      break;
+    // Display different information based on mode
+    Serial.println(); // Print a blank line for separation
 
-    case 1:
-      u8g2.setCursor(0, 10);
-      u8g2.print("Welcome To");
-      u8g2.setCursor(0, 20);
-      u8g2.print("Hexabit");
-      break;
+    switch (mode) {
+      case 0:
+        // Empty display, do nothing
+        break;
 
-    case 2:
-      {
-        float calories = getCalories(steps); // Get calories
-        u8g2.setCursor(0, 10);
-        u8g2.print("Steps: ");
-        u8g2.print(getSteps()); // Use getSteps() to get the step count
-        u8g2.setCursor(0, 20);
-        u8g2.print("Calorie: ");
-        u8g2.print(calories);
+      case 1: {
+        Serial.println("Welcome To Hexabit");
+        break;
       }
-      break;
 
-    case 3:
-      {
+      case 2:{
+        Serial.println("Time:" + getTime());
+        Serial.println("Date: " + getDate());
+        break;
+      }
+      case 3: {
+        float calories = getCalories(steps); // Get calories
+        Serial.print("Steps: ");
+        Serial.println(getSteps()); // Use getSteps() to get the step count
+        Serial.print("Calorie: ");
+        Serial.println(calories);
+        break;
+      }
+
+      case 4: {
         float distance_km = getDistanceKm(steps);   // Get distance in km
         float distance_miles = getDistanceMiles(steps); // Get distance in miles
-        u8g2.setCursor(0, 10);
-        u8g2.print("Distance");
-        u8g2.setCursor(0, 20);
-        u8g2.print("Km: ");
-        u8g2.print(distance_km);
-        u8g2.setCursor(0, 30);
-        u8g2.print("Miles: ");
-        u8g2.print(distance_miles);
+        Serial.println("Distance");
+        Serial.print("Km: ");
+        Serial.println(distance_km);
+        Serial.print("Miles: ");
+        Serial.println(distance_miles);
+        break;
       }
-      break;
 
-    case 4:
-      u8g2.setCursor(0, 10);
-      u8g2.print("Made By");
-      u8g2.setCursor(0, 20);
-      u8g2.print("Kpanesar88");
-      u8g2.setCursor(0, 30);
-      u8g2.print("v1.0");
-      break;
+      case 5: {
+        Serial.println("Weather: ");
+
+        break;
+      }
+
+      case 6:{
+        Serial.println("Made By");
+        Serial.println("Kpanesar88");
+        Serial.println("v1.0");
+        break;
+    }
   }
 
-  u8g2.sendBuffer(); // Transfer internal memory to the display
   delay(100); // Adjust this delay for real-time responsiveness
 }
