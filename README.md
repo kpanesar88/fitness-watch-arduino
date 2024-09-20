@@ -1,6 +1,6 @@
 # Fitness Watch Project
 
-This project is a basic fitness tracking device built with an Arduino, an LIS3DHTR accelerometer, and a DS3231 Real-Time Clock (RTC) module. It tracks steps, calculates calories burned, displays distance traveled, and provides the current date and time. 
+This project is a basic fitness tracking device built with an Arduino, an LIS3DHTR accelerometer, and a DS3231 Real-Time Clock (RTC) module. It tracks steps, calculates calories burned, displays distance traveled, and provides the current date and time.
 
 ## Features
 
@@ -16,7 +16,25 @@ This project is a basic fitness tracking device built with an Arduino, an LIS3DH
 1. **LIS3DHTR Accelerometer (I2C):** Measures acceleration to count steps.
 2. **DS3231 RTC (I2C):** Keeps track of the current date and time.
 3. **Button:** Used to switch between modes.
-4. **Arduino Board (Groveboard Module):** Runs the program and manages the sensors.
+4. **Arduino Board (Uno or GroveBoard):** Runs the program and manages the sensors.
+
+## How to Connect the Components
+
+| Component                 | Arduino Pin                 | Description                                       |
+|---------------------------|-----------------------------|---------------------------------------------------|
+| **LIS3DHTR Accelerometer** | SDA (A4), SCL (A5)          | Connect to the I2C pins for communication.        |
+| **DS3231 RTC Module**      | SDA (A4), SCL (A5)          | Shares I2C pins (A4, A5) with the accelerometer.  |
+| **Button**                 | Digital Pin D4              | Connect the button to digital pin D4 to change modes. |
+| **OLED Display (Optional)**| SDA (A4), SCL (A5)          | Connect to the same I2C pins for the display.     |
+| **Power (VCC)**            | 5V                         | All components are powered from the Arduino's 5V pin. |
+| **Ground (GND)**           | GND                        | Connect the GND of all components to the Arduino's GND pin. |
+
+### Schematic and Pictorial Circuit
+
+For a detailed connection diagram, check out the following resources:
+
+- **Schematic Diagram:** [Schematic Link](#)
+- **Pictorial Circuit:** [Pictorial Circuit Link](#)
 
 ## How to Use
 
@@ -25,16 +43,9 @@ This project is a basic fitness tracking device built with an Arduino, an LIS3DH
 3. **Distance Mode:** Shows the distance traveled in both kilometers and miles.
 4. **Time & Date Mode:** Displays the current date and time.
 5. **Welcome & Information Mode:** Displays a welcome message and project details.
-   
+
 Switch between modes by pressing the button.
 
-## Code Explanation
-
-- **Step Counting:** The accelerometer's X-axis values are used to detect when a step is made based on a defined threshold.
-- **Calorie Calculation:** Based on the average number of calories burned per step.
-- **Distance Calculation:** Uses the average step distance to calculate the total distance traveled in both kilometers and miles.
-- **RTC Integration:** Retrieves and displays the current date and time from the DS3231 RTC module.
-  
 ## Future Enhancements
 
 1. **Temperature Sensor Integration:** Add a temperature sensor (like DHT11 or DS18B20) to measure and display real-time temperature data alongside other fitness metrics.
@@ -66,17 +77,4 @@ If you need further help or tutorials, here are some useful links:
 - **LIS3DH Accelerometer Tutorial:** [YouTube](https://www.youtube.com/watch?v=C09hG8OCBEk)
 - **Getting Started With DS3231 RTC Module:** [YouTube](https://www.youtube.com/watch?v=RoSVrVVMy0c)
 - **How to Use a Button with an Arduino:** [YouTube](https://www.youtube.com/watch?v=yBgMJssXqHY)
-- **Grove Beginner Kit for Arduino Review:** [YouTube](https://www.youtube.com/watch?v=QiezoTmvlIc)
-
-## How to Contribute
-
-If you have suggestions for improvements or would like to contribute, feel free to reach out.
-
----
-
-## Contact Me
-
-- [💼 LinkedIn](https://www.linkedin.com/in/karanveer-panesar-0203a1247/)
-- [🐱 GitHub](https://github.com/kpanesar88)
-- [📧 Email](mailto:karanveerpanesar04@gmail.com)
-- [📸 Instagram](https://www.instagram.com/zorzex?igsh=MWJtdXZ3MTFrZHdpbQ%3D%3D&utm_source=qr)
+- **Grove Beginner Kit for Arduino Review:** [YouTube](https://
