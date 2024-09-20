@@ -76,4 +76,17 @@ If you need further help or tutorials, here are some useful links:
 - **LIS3DH Accelerometer Tutorial:** [YouTube](https://www.youtube.com/watch?v=C09hG8OCBEk)
 - **Getting Started With DS3231 RTC Module:** [YouTube](https://www.youtube.com/watch?v=RoSVrVVMy0c)
 - **How to Use a Button with an Arduino:** [YouTube](https://www.youtube.com/watch?v=yBgMJssXqHY)
-- **Grove Beginner Kit for Arduino Review:** [YouTube](https://
+- **Grove Beginner Kit for Arduino Review:** [YouTube](https://www.youtube.com/watch?v=QiezoTmvlIc)
+
+## How to Contribute
+
+If you have suggestions for improvements or would like to contribute, feel free to reach out.
+
+---
+
+## Contact Me
+
+- [💼 LinkedIn](https://www.linkedin.com/in/karanveer-panesar-0203a1247/)
+- [🐱 GitHub](https://github.com/kpanesar88)
+- [📧 Email](mailto:karanveerpanesar04@gmail.com)
+- [📸 Instagram](https://www.instagram.com/zorzex?igsh=MWJtdXZ3MTFrZHdpbQ%3D%3D&utm_source=qr)
