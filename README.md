@@ -28,13 +28,6 @@ This project is a basic fitness tracking device built with an Arduino, an LIS3DH
 | **Power (VCC)**            | 5V                         | All components are powered from the Arduino's 5V pin. |
 | **Ground (GND)**           | GND                        | Connect the GND of all components to the Arduino's GND pin. |
 
-### Schematic and Pictorial Circuit
-
-For a detailed connection diagram, check out the following resources:
-
-- **Schematic Diagram:** [Schematic Link](#)
-- **Pictorial Circuit:** [Pictorial Circuit Link](#)
-
 ## How to Use
 
 1. **Step Tracking Mode:** Shows the current number of steps you’ve taken.
