@@ -25,7 +25,6 @@ This project is a basic fitness tracking device built with an Arduino, an LIS3DH
 | **LIS3DHTR Accelerometer** | SDA (A4), SCL (A5)          | Connect to the I2C pins for communication.        |
 | **DS3231 RTC Module**      | SDA (A4), SCL (A5)          | Shares I2C pins (A4, A5) with the accelerometer.  |
 | **Button**                 | Digital Pin D4              | Connect the button to digital pin D4 to change modes. |
-| **OLED Display (Optional)**| SDA (A4), SCL (A5)          | Connect to the same I2C pins for the display.     |
 | **Power (VCC)**            | 5V                         | All components are powered from the Arduino's 5V pin. |
 | **Ground (GND)**           | GND                        | Connect the GND of all components to the Arduino's GND pin. |
 
